@@ -6,17 +6,20 @@ import Typography from '@material-ui/core/Typography';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 import Slide from '@material-ui/core/Slide';
+
+// reusables
+import AddNew from '../../reusables/AddNew';
 
 import './NotesBar.css'
 
 function HideOnScroll(props) {
-	const { children, window } = props;
+	const {children, window} = props;
 	// Note that you normally won't need to set the window ref as useScrollTrigger
 	// will default to window.
 	// This is only being set here because the demo is in an iframe.
-	const trigger = useScrollTrigger({ target: window ? window() : undefined });
+	const trigger = useScrollTrigger({target: window ? window() : undefined});
 
 	return (
 		<Slide appear={false} direction="down" in={!trigger}>
@@ -35,10 +38,17 @@ HideOnScroll.propTypes = {
 };
 
 class NotesBar extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			closed: true
+		}
+	}
+
+
 	render() {
 		return (
 			<div>
-				<CssBaseline />
 				<HideOnScroll {...this.props}>
 					<AppBar className="NotesBar">
 						<Toolbar>
@@ -46,10 +56,9 @@ class NotesBar extends Component {
 						</Toolbar>
 					</AppBar>
 				</HideOnScroll>
-				<Toolbar />
-				<Container>
-
-				</Container>
+				<Grid container spacing={3}>
+					<AddNew textWidth={300}/>
+				</Grid>
 			</div>
 		);
 	}

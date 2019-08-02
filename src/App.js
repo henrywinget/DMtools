@@ -14,6 +14,9 @@ import NotesBar from "./components/NotesBar/NotesBar";
 class App extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			notesOpen: false
+		}
 	}
 
 	initialNotesHeight = () => {
