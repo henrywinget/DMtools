@@ -8,6 +8,7 @@ import 'typeface-roboto';
 
 // components
 import Campaign from './components/Campaign';
+import Map from './components/Map';
 import TopNav from './components/TopNav';
 import NotesBar from "./components/NotesBar/NotesBar";
 
@@ -15,7 +16,8 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			notesOpen: false
+			notesOpen: false,
+			mapGridX: 1
 		}
 	}
 
@@ -23,8 +25,22 @@ class App extends Component {
 		return window.innerHeight / 42.7;
 	};
 
+	onResize = (item) => {
+		console.log(item);
+		if(item[0].w > 1) {
+			this.setState({
+				mapGridX: Math.ceil(item[0].w) + 1
+			})
+		} else {
+			this.setState({
+				mapGridX: 1
+			})
+		}
+	};
+
 	render() {
-		const noteBarGrid = {x: 0, y: 0, w: 5, minW: 5, minH: this.initialNotesHeight(), h: this.initialNotesHeight()};
+		const noteBarGrid = {x: 0, y: 0, w: 1, minW: 1, maxW: 3, minH: this.initialNotesHeight(), h: this.initialNotesHeight(), maxH: this.initialNotesHeight(), isDraggable: false, isResizable: true};
+		const mapGrid = {x: 1, y: 0, w: 5, minW: 5, maxH: this.initialNotesHeight(), h: this.initialNotesHeight(), isDraggable: true};
 
 		return (
 			<div className="App">
@@ -33,17 +49,23 @@ class App extends Component {
 					// className="NotesBarLayout"
 					cols={12}
 					verticalCompact={true}
-					isDraggable={false}
-					isResizable={true}
 					rowHeight={30}
-					width={250}>
+					width={window.innerWidth}
+					compactType={"horizontal"}
+					// preventCollision={true}
+					onResize={this.onResize}>
 					<div key="notesComponent"
-					     className="NotesBarLayout"
+					     className="NotesBarLayout Draggable-layout"
 					     data-grid={noteBarGrid}>
 						<NotesBar/>
 					</div>
+					<div key="mapsComponent"
+					     className="MapsLayout Draggable-layout"
+					     data-grid={mapGrid}>
+						<Map/>
+					</div>
 				</ReactGridLayout>
-				{/*<Campaign/>*/}
+				<Campaign/>
 			</div>
 		);
 	}

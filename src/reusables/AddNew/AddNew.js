@@ -14,6 +14,7 @@ export default function AddNew(props){
 			textField: {
 				marginLeft: theme.spacing(1),
 				marginRight: theme.spacing(1),
+				marginTop: 30,
 				width: '90%',
 			},
 			dense: {
