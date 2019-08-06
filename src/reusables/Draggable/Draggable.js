@@ -8,10 +8,22 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Slide from '@material-ui/core/Slide';
 
-const Draggable = () => {
+import HideOnScroll from '../../reusables/HideOnScroll';
+import AddNew from '../../reusables/AddNew';
+
+const Draggable = (props) => {
 	return (
 		<div>
-
+			{/*<HideOnScroll {...props}>*/}
+				<AppBar className="NotesBar">
+					<Toolbar>
+						<Typography variant="h6">{props.title}</Typography>
+					</Toolbar>
+				</AppBar>
+			{/*</HideOnScroll>*/}
+			<Grid container spacing={3}>
+				<AddNew textWidth={300}/>
+			</Grid>
 		</div>
 	);
 };
